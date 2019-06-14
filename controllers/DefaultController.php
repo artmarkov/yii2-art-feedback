@@ -1,12 +1,14 @@
 <?php
 
 namespace artsoft\feedback\controllers;
+
 use Yii;
+use artsoft\controllers\admin\BaseController;
 
 /**
  * FeedbackController implements the CRUD actions for artsoft\models\Feedback model.
  */
-class DefaultController extends \backend\controllers\DefaultController 
+class DefaultController extends BaseController 
 {
     public $modelClass       = 'artsoft\feedback\models\Feedback';
     public $modelSearchClass = 'artsoft\feedback\models\search\FeedbackSearch';
