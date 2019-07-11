@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model artsoft\feedback\models\Feedback */
 
-$this->title = Yii::t('yii', 'Update') . ': ' . $model->username;
+$this->title = Yii::t('art', 'Update "{item}"', ['item' => $model->username]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('art/feedback', 'Feedback'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('yii', 'Update');
 ?>

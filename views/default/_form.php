@@ -3,7 +3,6 @@
 use artsoft\widgets\ActiveForm;
 use artsoft\feedback\models\Feedback;
 use artsoft\helpers\Html;
-use artsoft\media\widgets\TinyMce;
 use yii\jui\DatePicker;
 use kartik\switchinput\SwitchInput;
 
@@ -22,7 +21,7 @@ use kartik\switchinput\SwitchInput;
     ?>
 
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
 
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -35,13 +34,18 @@ use kartik\switchinput\SwitchInput;
                         </div>
                     </div>
 
-                    <?= $form->field($model, 'content')->widget(TinyMce::class); ?>
+                            <?= $form->field($model, 'content')->widget(trntv\aceeditor\AceEditor::class,
+                                     [
+                                         'mode' => 'html',
+                                         'theme' => 'sqlserver', //chrome,clouds,clouds_midnight,cobalt,crimson_editor,dawn,dracula,dreamweaver,eclipse,iplastic
+                                                                 //merbivore,merbivore_soft,sqlserver,terminal,tomorrow_night,twilight,xcode
+                                     ]) ?>
                     
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
 
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -50,40 +54,32 @@ use kartik\switchinput\SwitchInput;
                             <label class="control-label" style="float: left; padding-right: 5px;"><?=  $model->attributeLabels()['id'] ?>: </label>
                             <span><?=  $model->id ?></span>
                         </div>
+                        
                         <?php if (!$model->isNewRecord): ?>
 
-                            <div class="form-group clearfix">
-                                <label class="control-label" style="float: left; padding-right: 5px;">
-                             <?= $model->attributeLabels()['created_at'] ?> :
-                                </label>
-                                <span><?= $model->createdDatetime ?></span>
-                            </div>
+                        <div class="form-group clearfix">
+                            <label class="control-label" style="float: left; padding-right: 5px;">
+                         <?= $model->attributeLabels()['created_at'] ?> :
+                            </label>
+                            <span><?= $model->createdDatetime ?></span>
+                        </div>
 
-                            <div class="form-group clearfix">
-                                <label class="control-label" style="float: left; padding-right: 5px;">
-                            <?= $model->attributeLabels()['updated_at'] ?> :
-                                </label>
-                                <span><?= $model->updatedDatetime ?></span>
-                            </div>
+                        <div class="form-group clearfix">
+                            <label class="control-label" style="float: left; padding-right: 5px;">
+                        <?= $model->attributeLabels()['updated_at'] ?> :
+                            </label>
+                            <span><?= $model->updatedDatetime ?></span>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="control-label" style="float: left; padding-right: 5px;">
+                        <?= $model->attributeLabels()['updated_by'] ?> :
+                            </label>
+                            <span><?= $model->updatedBy->username ?></span>
+                        </div>
                         
-                            <div class="form-group clearfix">
-                                <label class="control-label" style="float: left; padding-right: 5px;">
-                            <?= $model->attributeLabels()['updated_by'] ?> :
-                                </label>
-                                <span><?= $model->updatedBy->username ?></span>
-                            </div>
                         <?php endif; ?>
-                            <?= $form->field($model, 'published_at')
-                                ->widget(DatePicker::className(), ['dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']]);
-                            ?>
-                        
-                            <?= $form->field($model, 'main_flag')->widget(SwitchInput::classname(), [
-                                'pluginOptions' => [
-                                    'size' => 'small',
-                                ],
-                            ]); ?>
-                        
-                            <?= $form->field($model, 'status')->dropDownList(Feedback::getStatusList()) ?>
+                           
                         <div class="form-group">
                             <?php  if ($model->isNewRecord): ?>
                                 <?= Html::submitButton(Yii::t('art', 'Create'), ['class' => 'btn btn-primary']) ?>
@@ -103,7 +99,23 @@ use kartik\switchinput\SwitchInput;
                     </div>
                 </div>
             </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <?= $form->field($model, 'published_at')
+                            ->widget(DatePicker::className(), ['dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']]);
+                    ?>
+                    
+                    <?= $form->field($model, 'status')->dropDownList(Feedback::getStatusList()) ?>
 
+                    <?= $form->field($model, 'main_flag')->widget(SwitchInput::classname(), [
+                        'pluginOptions' => [
+                            'size' => 'small',
+                        ],
+                    ]);
+                    ?>
+
+                </div>
+            </div>
         </div>
     </div>
 
